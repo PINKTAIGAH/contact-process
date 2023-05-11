@@ -7,7 +7,6 @@ class Simulate(object):
 
     def __init__(self, l, p):
 
-        self.algorithms= Algorithms()
         self.observables= Observables()
         self.l= l
         self.p= p
@@ -16,12 +15,13 @@ class Simulate(object):
 
     def gneerateInitialLattice(self):
 
-        self.arr= np.random.choice(np.array([0, 1, 2]), size=(self.l, self.l))
+        self.arr= np.random.choice(np.array([0, 1]), size=(self.l, self.l))
 
     def runSimulationVisualisation(self):
         
         self.epoch=0
         self.sweeps=0
+        self.gneerateInitialLattice()
         self.animation= Animate(self.arr)
 
         while True:

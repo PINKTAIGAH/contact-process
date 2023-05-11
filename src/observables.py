@@ -2,6 +2,5 @@ import numpy as np
 
 class Observables(object):
 
-    def __init__(self):
-
-        pass
+    def findActiveFraction(arr):
+        return np.count_nonzero(arr==1)/arr.size

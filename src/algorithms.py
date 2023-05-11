@@ -7,14 +7,19 @@ class Algorithms(object):
 
         self.l= l
         self.p= p
-        self.upIndex= np.roll(np.indices((self.L, self.L)), -1, axis=0)
-        self.downIndex= np.roll(np.indices((self.L, self.L)), +1, axis=0)
-        self.rightIndex= np.roll(np.indices((self.L, self.L)), +1, axis=1)
-        self.leftIndex= np.roll(np.indices((self.L, self.L)), -1, axis=1)
+        self.upIndex= np.roll(np.indices((self.l, self.l)), -1, axis=0)
+        self.downIndex= np.roll(np.indices((self.l, self.l)), +1, axis=0)
+        self.rightIndex= np.roll(np.indices((self.l, self.l)), +1, axis=1)
+        self.leftIndex= np.roll(np.indices((self.l, self.l)), -1, axis=1)
 
+        self.upIndex= np.dstack([self.upIndex[0], self.upIndex[1]])
+        self.downIndex= np.dstack([self.downIndex[0], self.downIndex[1]])
+        self.rightIndex= np.dstack([self.rightIndex[0], self.rightIndex[1]])
+        self.leftIndex= np.dstack([self.leftIndex[0], self.leftIndex[1]])
+    
     def generateRandomIndex(self):
 
-        self.i= tuple(np.random.randint(low= 0, high= self.l, size=(self.l, self.l)))
+        self.i= tuple(np.random.randint(low= 0, high= self.l, size=2))
     
     def chooseRandomNeighbour(self):
         # Pick random index for nearest neighbour
@@ -41,11 +46,11 @@ class Algorithms(object):
             pass
         if self.arr[self.i]== 1:
             self.chooseRandomNeighbour()
-            if np.random.rand <= 1-self.p:
-                self.arr[self.i]==0
-            if np.random.rand <= self.p & self.neighbourList[self.randomNeighbourListIndex] == 0:
-                randomNeighbourIndex= self.neighbourIndex[self.randomNeighbourListIndex]
-                self.arr[randomNeighbourIndex] == 1            
+            if np.random.rand() <= 1-self.p:
+                self.arr[self.i]=0
+            if np.random.rand() <= self.p and self.neighbourList[self.randomNeighbourListIndex] == 0:
+                randomNeighbourIndex= tuple(self.neighbourIndex[self.randomNeighbourListIndex])
+                self.arr[randomNeighbourIndex] = 1            
 
     def updateLattice(self, arr):
         
